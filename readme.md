@@ -1,9 +1,7 @@
-# @mtproto/core
+# mtproton
 
-[![NPM](https://img.shields.io/npm/v/@mtproto/core.svg?style=flat-square)](https://www.npmjs.com/package/@mtproto/core)
-[![GitHub Actions](https://img.shields.io/github/workflow/status/alik0211/mtproto-core/Unit%20tests/master?style=flat-square)](https://github.com/alik0211/mtproto-core/actions?query=branch%3Amaster)
-[![Downloads](https://img.shields.io/npm/dm/@mtproto/core?style=flat-square)](https://www.npmjs.com/package/@mtproto/core)
-[![Telegram channel](https://img.shields.io/badge/Telegram-channel-blue?style=flat-square&logo=telegram)](https://t.me/mtproto_core)
+[![NPM](https://img.shields.io/npm/v/mtproton.svg?style=flat-square)](https://www.npmjs.com/package/mtproton)
+[![Downloads](https://img.shields.io/npm/dm/mtproton?style=flat-square)](https://www.npmjs.com/package/mtproton)
 
 Telegram API JS (MTProto) client library for browser and nodejs
 
@@ -16,9 +14,7 @@ Telegram API JS (MTProto) client library for browser and nodejs
 
 ## Install
 ```sh
-yarn add @mtproto/core -E
-# or
-npm i @mtproto/core -E
+npm i mtproton -E
 ```
 
 ## Quick start
@@ -26,7 +22,7 @@ npm i @mtproto/core -E
 You need **api_id** and **api_hash**. If you do not have them yet, then get them according to the official instructions: [creating your Telegram application](https://core.telegram.org/api/obtaining_api_id).
 
 ```js
-const { MTProto } = require('@mtproto/core');
+const { MTProto } = require('mtproton');
 
 const api_id = 'YOU_API_ID';
 const api_hash = 'YOU_API_HASH';
@@ -77,7 +73,7 @@ We have ready-made storage:
 
 Example:
 ```js
-const { tempLocalStorage } = require('@mtproto/core/src/storage/temp');
+const { tempLocalStorage } = require('mtproton/src/storage/temp');
 
 const mtproto = new MTProto({
   customLocalStorage: tempLocalStorage,

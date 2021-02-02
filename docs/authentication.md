@@ -64,7 +64,7 @@ function checkPassword({ srp_id, A, M1 }) {
 
 ## Code
 ```js
-const { getSRPParams } = require('@mtproto/core');
+const { getSRPParams } = require('mtproton');
 
 const phone = 'PHONE_NUMBER';
 const code = 'XXXXX';

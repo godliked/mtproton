@@ -1,7 +1,3 @@
-// Type definitions for @mtproto/core
-// Project: https://github.com/alik0211/mtproto-core
-// Definitions by: Ali Gasymov <https://www.gasymov.com/>
-
 declare class MyAsyncLocalStorage {
   setItem(key: string, value: string): Promise<void>;
   getItem(key: string): Promise<string|null>;

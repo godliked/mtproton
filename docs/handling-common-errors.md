@@ -1,8 +1,8 @@
 # Handling common errors
 
 ```js
-const { MTProto } = require('@mtproto/core');
-const { sleep } = require('@mtproto/core/src/utils/common');
+const { MTProto } = require('mtproton');
+const { sleep } = require('mtproton/src/utils/common');
 
 const mtproto = new MTProto({
   api_id: process.env.API_ID,

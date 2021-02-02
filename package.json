@@ -1,5 +1,5 @@
 {
-  "name": "@mtproto/core",
+  "name": "mtproton",
   "version": "5.3.0",
   "description": "Telegram API JS (MTProto) client library for browser and nodejs",
   "keywords": [
@@ -18,12 +18,6 @@
     "telegram-web",
     "telegram-online"
   ],
-  "homepage": "https://github.com/alik0211/mtproto-core#readme",
-  "bugs": {
-    "url": "https://github.com/alik0211/mtproto-core/issues"
-  },
-  "author": "Ali Gasymov <alik0211alik@gmail.com> (https://gasymov.com/)",
-  "repository": "github:alik0211/mtproto-core",
   "files": [
     "index.js",
     "index.d.ts",

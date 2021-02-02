@@ -8,7 +8,7 @@ function getLocalStorage() {
     return localStorage;
   }
 
-  const paths = envPaths('@mtproto/core', {
+  const paths = envPaths('mtproton', {
     suffix: '',
   });
 
