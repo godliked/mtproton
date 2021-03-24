@@ -5,7 +5,7 @@ const mtprotoSchema = require('../scheme/mtproto.json');
 
 const lines = [];
 
-const aviableTypes = [
+const availableTypes = [
   'int',
   'long',
   'int128',
@@ -71,7 +71,7 @@ const paramsToLines = params => {
         flagType = 'Bool';
       }
 
-      if (!aviableTypes.includes(flagType)) {
+      if (!availableTypes.includes(flagType)) {
         flagType = 'predicate';
       }
 
@@ -83,7 +83,7 @@ const paramsToLines = params => {
         vectorType = vectorType.substr(1);
       }
 
-      if (!aviableTypes.includes(vectorType)) {
+      if (!availableTypes.includes(vectorType)) {
         vectorType = 'predicate';
       }
 
@@ -91,7 +91,7 @@ const paramsToLines = params => {
       args = [`this.${vectorType}`, `params.${param.name}`];
     } else if (['!X'].includes(param.type)) {
       fnName = 'predicate';
-    } else if (!aviableTypes.includes(param.type)) {
+    } else if (!availableTypes.includes(param.type)) {
       fnName = 'predicate';
     }
 
