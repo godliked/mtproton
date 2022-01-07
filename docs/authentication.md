@@ -62,39 +62,57 @@ function checkPassword({ srp_id, A, M1 }) {
 }
 ```
 
+## 4. Sign Up
+```js
+function signUp({ phone, phone_code_hash }) {
+  return api.call('auth.signUp', {
+    phone_number: phone,
+    phone_code_hash: phone_code_hash,
+    first_name: 'MTProto',
+    last_name: 'Core',
+  });
+}
+```
+
 ## Code
 ```js
-const { getSRPParams } = require('mtproton');
-
-const phone = 'PHONE_NUMBER';
-const code = 'XXXXX';
-const password = 'PASSWORD';
-
 (async () => {
   const user = await getUser();
+
+  const phone = '+99966XYYYY';
+  const code = 'XXXXX';
 
   if (!user) {
     const { phone_code_hash } = await sendCode(phone);
 
     try {
-      const authResult = await signIn({
+      const signInResult = await signIn({
         code,
         phone,
         phone_code_hash,
       });
 
-      console.log(`authResult:`, authResult);
+      if (signInResult._ === 'auth.authorizationSignUpRequired') {
+        await signUp({
+          phone,
+          phone_code_hash,
+        });
+      }
     } catch (error) {
       if (error.error_message !== 'SESSION_PASSWORD_NEEDED') {
+        console.log(`error:`, error);
+
         return;
       }
 
       // 2FA
 
+      const password = 'USER_PASSWORD';
+
       const { srp_id, current_algo, srp_B } = await getPassword();
       const { g, p, salt1, salt2 } = current_algo;
 
-      const { A, M1 } = await getSRPParams({
+      const { A, M1 } = await api.mtproto.crypto.getSRPParams({
         g,
         p,
         salt1,
@@ -103,9 +121,7 @@ const password = 'PASSWORD';
         password,
       });
 
-      const authResult = await checkPassword({ srp_id, A, M1 });
-
-      console.log(`authResult:`, authResult);
+      const checkPasswordResult = await checkPassword({ srp_id, A, M1 });
     }
   }
 })();

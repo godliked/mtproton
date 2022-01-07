@@ -23,25 +23,25 @@ npm i mtproton -E
 You need **api_id** and **api_hash**. If you do not have them yet, then get them according to the official instructions: [creating your Telegram application](https://core.telegram.org/api/obtaining_api_id).
 
 ```js
-const { MTProto } = require('mtproton');
+const path = require('path');
+const MTProto = require('mtproton');
 
-const api_id = 'YOU_API_ID';
-const api_hash = 'YOU_API_HASH';
+const api_id = YOU_API_ID;
+const api_hash = YOU_API_HASH;
 
-// 1. Create an instance
+// 1. Create instance
 const mtproto = new MTProto({
   api_id,
   api_hash,
+
+  storageOptions: {
+    path: path.resolve(__dirname, './data/1.json'),
+  },
 });
 
-// 2. Provide params for initConnection method (optional)
-mtproto.updateInitConnectionParams({
-  app_version: '10.0.0',
-});
-
-// 3. Get the user country code
+// 2. Print the user country code
 mtproto.call('help.getNearestDc').then(result => {
-  console.log(`country:`, result.country);
+  console.log('country:', result.country);
 });
 ```
 
@@ -52,32 +52,55 @@ mtproto.call('help.getNearestDc').then(result => {
 
 ## API
 
-### `new MTProto({ api_id, api_hash, test, customLocalStorage }) => mtproto`
+### `new MTProto({ api_id, api_hash, test, storageOptions }) => mtproto`
 
-#### `api_id: number` and `api_hash: string`
+#### `api_id: number` and `api_hash: string` and `storageOptions: { path: string, instance: object }`
 **api_id** and **api_hash** are required. If you do not have them yet, then get them according to the official instructions: [creating your Telegram application](https://core.telegram.org/api/obtaining_api_id).
 
 #### `test: boolean`
 Default: `false`. Use test data centers. On test servers, you can use [test phone numbers](https://core.telegram.org/api/auth#test-phone-numbers).
 
-#### `customLocalStorage: localStorage`
-Default for browser: `window.localStorage`. Default for nodejs: [`node-localstorage`](https://github.com/alik0211/mtproto-core/blob/master/src/storage/local/index.js). Custom storage for save auth data. Your localStorage must follow this API:
+#### `storageOptions: { instance?: customLocalStorage, path?: 'path to json storage file' }`
+We have default storages. The storage is used to store the session (authentication keys, server salts and time offset). Depending on the environment, you need to pass different parameters for the storage. But you can also use custom storage
+## For `node` environment
+In the storageOptions.path, pass the absolute path to the json file through the constructor
+```js
+new MTProto({
+  storageOptions: {
+    path: path.resolve(__dirname, './data/1.json'),
+  },
+});
+```
+## For `browser` environment
+The window.localStorage is used for storage. You don't need to pass storageOptions
+## Custom Storage
 ```ts
-class MyAsyncLocalStorage {
-  setItem(key: string, value: string): Promise<void>;
-  getItem(key: string): Promise<string|null>;
+class CustomStorage {
+  set(key: string, value: string): Promise<void>;
+  get(key: string): Promise<string|null>;
 }
+```
+```js
+const instance = new CustomStorage();
+
+new MTProto({
+  storageOptions: {
+    instance,
+  },
+});
 ```
 
 We have ready-made storage:
-1. [tempLocalStorage](https://github.com/alik0211/mtproto-core/blob/master/src/storage/temp/index.js) only stores data while the script is running
+1. `tempStorage` only stores data while the script is running
 
 Example:
 ```js
-const { tempLocalStorage } = require('mtproton/src/storage/temp');
+const tempStorage = require('mtproton/core/src/storage/temp');
 
-const mtproto = new MTProto({
-  customLocalStorage: tempLocalStorage,
+new MTProto({
+  storageOptions: {
+    instance: tempStorage,
+  },
 });
 ```
 
